@@ -1,4 +1,6 @@
 import React from 'react'
+import {createDog} from '../actions/dogActions'
+import {connect} from 'react-redux'
 
 
 class DogForm extends React.Component {
@@ -17,6 +19,12 @@ class DogForm extends React.Component {
         // grab form data from state
         // trigger an action to make a POST request
         // clear form
+        e.preventDefault()
+        let dog = this.state
+        this.props.createDog(dog)
+        this.setState({
+            url: ""
+        })
     }
 
     render(){
@@ -24,10 +32,10 @@ class DogForm extends React.Component {
             <div>
                 <h3>Add a new dog image url:</h3>
                 <p><input onChange={this.handleChange} type="text" name="url" value={this.state.url}></input></p>
-                <input onSubmit={this.handleSubmit} type="submit" value="Add Dog"/>
+                <button onClick={this.handleSubmit} type="submit">Add Dog</button>
             </div>
         )
     }
 }
 
-export default DogForm
+export default connect(null,{createDog})(DogForm)
